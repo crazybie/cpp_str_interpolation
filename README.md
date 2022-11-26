@@ -1,7 +1,7 @@
 # cpp_str_interpolation
 super simple but powerfull C++ string interpolation and template engine.
 
-## Desc
+# Desc
 use python script to parse the current cpp file and generate a macro to build the interpolated string.
 you can redirect the default string builder ostrstream to other implementation.
 
