@@ -1,16 +1,18 @@
 # cpp_str_interpolation
 super simple but powerfull C++ string interpolation and template engine.
 
-## desc
+## Desc
 use python script to parse the current cpp file and generate a macro to build the interpolated string.
 you can redirect the default string builder ostrstream to other implementation.
 
+# Usage
+1. python gen_temp_str.py `<cpp file name>`
+2. include the generated file in your cpp file.
+
+
 please see the main.cpp for example.
 
-# python3 script usage:
-python gen_temp_str.py <cpp file name>
-
-## example:
+## Example:
 ```c++
 
 void test1() {
