@@ -6,9 +6,7 @@ use python script to parse the current cpp file and generate a macro to build th
 you can redirect the default string builder ostrstream to other implementation.
 
 # Usage
-1. python gen_temp_str.py `<cpp file name>`
-2. include the generated file in your cpp file.
-
+1. python gen_temp_str.py `<cpp file name>`, the script will update the source file to include the generated file.
 
 please see the main.cpp for example.
 
