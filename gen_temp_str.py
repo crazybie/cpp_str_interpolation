@@ -3,9 +3,22 @@ auto w = "world";
 std::cout << _F("hello, {w}");
 '''
 
-import sys, re
+import sys, re, os
+
 f = sys.argv[1]
 all = open(f).read()
+gen_f = '.'.join(f.split('.')[:-1])+'.f.hpp'
+
+############
+# include the gen file
+base = os.path.basename(gen_f)
+if not re.search(fr'#include "\./{re.escape(base)}"', all):
+    last_include = re.finditer(fr'#include.*\n', all)
+    if last_include:
+        p = next(last_include).end()
+        all = all[:p]+ f'\n#include "./{base}"\n' + all[p:]
+        open(f, 'w').write(all)
+
 
 ###########
 # parse
@@ -19,8 +32,8 @@ for m in re.finditer(r'(_F\("(.*?)"\))|(_F\(R"\((.*?)\)"\))', all, re.DOTALL|re.
         t = m.group(4)
         g = 4
     lno = [idx + 1 for idx, l in enumerate(line_ends) if l>m.end(g)][0]
-    s.append([lno, t, g])
-    print(lno)
+    s.append([lno, t, g])    
+    print([idx + 1 for idx, l in enumerate(line_ends) if l>m.start(g)][0])
     
 ##########
 # generate
@@ -116,5 +129,9 @@ for lno, i, g in s:
         o+='; \\\nreturn __r.str();\\\n'
         o+='}()'
             
-f = '.'.join(f.split('.')[:-1])+'.f.hpp'
-open(f, 'w').write(o)
+
+open(gen_f, 'w').write(o)
+
+
+
+    
